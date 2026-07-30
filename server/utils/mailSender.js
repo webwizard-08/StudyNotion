@@ -11,19 +11,16 @@ exports.mailSender = async (email, title, body) => {
 
     for (const mailPort of mailPorts) {
       try {
-        const transporter = nodemailer.createTransport({
-          host: process.env.MAIL_HOST,
-          port: mailPort,
-          secure: mailPort === 465,
-          requireTLS: mailPort !== 465,
-          connectionTimeout: 10000,
-          greetingTimeout: 10000,
-          socketTimeout: 10000,
-          auth: {
-            user: process.env.MAIL_USER,
-            pass: process.env.MAIL_PASS,
-          },
-        });
+      const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASS,
+  },
+});
+
+await transporter.verify();
+console.log("SMTP Connected Successfully");
 
         const info = await transporter.sendMail({
           from: `"StudyNotion" <${process.env.MAIL_USER}>`,
