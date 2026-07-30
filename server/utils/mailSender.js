@@ -7,17 +7,14 @@ exports.mailSender = async (email, title, body) => {
   port: Number(process.env.MAIL_PORT),
   secure: false,
   requireTLS: true,
+  connectionTimeout: 10000,
+  greetingTimeout: 10000,
+  socketTimeout: 10000,
   auth: {
     user: process.env.MAIL_USER,
     pass: process.env.MAIL_PASS,
   },
 });
-    console.log("Before verify");
-await transporter.verify();
-console.log("SMTP Verified");
-
-console.log("Before sendMail");
-
 const info = await transporter.sendMail({
   from: `"StudyNotion" <${process.env.MAIL_USER}>`,
   to: email,
