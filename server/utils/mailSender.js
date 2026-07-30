@@ -12,15 +12,21 @@ exports.mailSender = async (email, title, body) => {
     pass: process.env.MAIL_PASS,
   },
 });
-    console.log("MAIL_HOST =", JSON.stringify(process.env.MAIL_HOST));
+    console.log("Before verify");
+await transporter.verify();
+console.log("SMTP Verified");
 
-    const info = await transporter.sendMail({
-      from: `"StudyNotion" <${process.env.MAIL_USER}>`,
-      to: email,
-      subject: title,
-      html: body,
-    });
+console.log("Before sendMail");
 
+const info = await transporter.sendMail({
+  from: `"StudyNotion" <${process.env.MAIL_USER}>`,
+  to: email,
+  subject: title,
+  html: body,
+});
+
+console.log("After sendMail");
+console.log(info);
     console.log("Email sent:", info.messageId);
     return info;
   } catch (error) {
