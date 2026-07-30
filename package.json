@@ -1,0 +1,47 @@
+{
+  "name": "studynotion",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "client": "vite",
+    "server": "cd server && npm run dev",
+    "dev": "concurrently -n \"client,server\" -c \"bgBlue,bgYellow\" \"npm run client\" \"npm run server\"",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@ramonak/react-progress-bar": "^5.4.0",
+    "@reduxjs/toolkit": "^1.9.5",
+    "axios": "^1.4.0",
+    "chart.js": "^4.3.0",
+    "concurrently": "^8.0.1",
+    "copy-to-clipboard": "^3.3.3",
+    "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.3",
+    "react-hook-form": "^7.82.0",
+    "react-hot-toast": "^2.6.0",
+    "react-icons": "^4.12.0",
+    "react-markdown": "^8.0.7",
+    "react-otp-input": "^3.1.1",
+    "react-player": "^3.4.0",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.30.4",
+    "react-simple-star-rating": "^5.1.7",
+    "react-stars": "^2.2.5",
+    "react-super-responsive-table": "^5.2.1",
+    "react-type-animation": "^3.2.0",
+    "redux-toolkit": "^1.1.2",
+    "swiper": "^9.4.1",
+    "video-react": "^0.16.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.3",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.2.7",
+    "vite": "^8.1.1"
+  }
+}

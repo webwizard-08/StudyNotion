@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+	margin: 0;
+	min-height: 100%;
+	background: #020617;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #374151;
+  border-bottom-color: #ffd60a;
+  border-radius: 50%;
+  display: inline-block;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@layer components {
+  .form-style {
+    @apply w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5 shadow-[0_1px_0_0_rgba(255,255,255,0.18)_inset] focus:outline-none;
+  }
+
+  .label-style {
+    @apply text-[14px] text-richblack-5;
+  }
+}
