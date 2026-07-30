@@ -27,6 +27,7 @@ app.use(cookieParser());
   "http://localhost:5173",
   "http://localhost:5174",
   "https://study-notion-five-cyan.vercel.app",
+  "https://study-notion-18wo0arvt-adarsh-yadavs-projects-59c4f4c0.vercel.app",
 ];
 
 app.use(
