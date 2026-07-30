@@ -11,6 +11,7 @@ exports.mailSender = async (email, title, body) => {
         pass: process.env.MAIL_PASS,
       },
     });
+    console.log("MAIL_HOST =", JSON.stringify(process.env.MAIL_HOST));
 
     const info = await transporter.sendMail({
       from: `"StudyNotion" <${process.env.MAIL_USER}>`,
