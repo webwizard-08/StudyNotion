@@ -3,12 +3,14 @@ const User = require("../models/User")
 const OTP = require("../models/OTP")
 const jwt = require("jsonwebtoken")
 const otpGenerator = require("otp-generator")
-const mailSender = require("../utils/mailSender")
+const {mailSender} = require("../utils/mailSender")
+const emailTemplate = require("../mail/templates/emailVerificationTemplate");
 const { passwordUpdated } = require("../mail/templates/passwordUpdate")
 const Profile = require("../models/Profile")
 require("dotenv").config()
 
 // Signup Controller for Registering USers
+
 
 exports.signup = async (req, res) => {
   try {
@@ -214,6 +216,13 @@ console.log("User Found:", checkUserPresent);
     }
     const otpPayload = { email, otp }
     const otpBody = await OTP.create(otpPayload)
+    await mailSender(
+  email,
+  "Verification Email",
+  emailTemplate(otp)
+);
+
+console.log("Email sent successfully");
     console.log("OTP Body", otpBody)
     res.status(200).json({
       success: true,
