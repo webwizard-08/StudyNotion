@@ -2,48 +2,37 @@ const nodemailer = require("nodemailer");
 
 exports.mailSender = async (email, title, body) => {
   try {
-    const configuredPort = Number(process.env.MAIL_PORT);
-    const mailPorts = Number.isFinite(configuredPort)
-      ? [configuredPort]
-      : [587, 465, 2525];
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS,
+      },
+      connectionTimeout: 30000,
+      greetingTimeout: 30000,
+      socketTimeout: 30000,
+    });
 
-    let lastError;
+    console.log("Verifying SMTP...");
 
-    for (const mailPort of mailPorts) {
-      try {
-      const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASS,
-  },
-});
+    await transporter.verify();
 
-await transporter.verify();
-console.log("SMTP Connected Successfully");
+    console.log("SMTP Connected Successfully");
 
-        const info = await transporter.sendMail({
-          from: `"StudyNotion" <${process.env.MAIL_USER}>`,
-          to: email,
-          subject: title,
-          html: body,
-        });
+    const info = await transporter.sendMail({
+      from: `"StudyNotion" <${process.env.MAIL_USER}>`,
+      to: email,
+      subject: title,
+      html: body,
+    });
 
-        console.log("After sendMail");
-        console.log(info);
-        console.log("Email sent:", info.messageId);
-        return info;
-      } catch (error) {
-        lastError = error;
-        if (!["ETIMEDOUT", "ESOCKET", "ECONNREFUSED"].includes(error.code)) {
-          throw error;
-        }
-      }
-    }
+    console.log("Email sent:", info.messageId);
 
-    throw lastError;
+    return info;
   } catch (error) {
-    console.log("Mail Error:", error);
+    console.error("Mail Error:", error);
     throw error;
   }
 };
