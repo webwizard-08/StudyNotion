@@ -2,10 +2,11 @@ const nodemailer = require("nodemailer");
 
 exports.mailSender = async (email, title, body) => {
   try {
+    const mailPort = Number(process.env.MAIL_PORT) || 587;
     const transporter = nodemailer.createTransport({
   host: process.env.MAIL_HOST,
-  port: Number(process.env.MAIL_PORT),
-  secure: false,
+  port: mailPort,
+  secure: mailPort === 465,
   requireTLS: true,
   connectionTimeout: 10000,
   greetingTimeout: 10000,
