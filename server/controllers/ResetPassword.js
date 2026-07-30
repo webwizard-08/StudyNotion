@@ -26,25 +26,28 @@ exports.resetPasswordToken = async (req, res) => {
 		console.log("DETAILS", updatedDetails);
 
 	const url = `${process.env.FRONTEND_URL}/update-password/${token}`;
+	console.log("Before mailSender");
 
 		await mailSender(
 			email,
 			"Password Reset",
 			`Your Link for email verification is ${url}. Please click this url to reset your password.`
 		);
-
+console.log("After mailSender");
 		res.json({
 			success: true,
 			message:
 				"Email Sent Successfully, Please Check Your Email to Continue Further",
 		});
 	} catch (error) {
-		return res.json({
-			error: error.message,
-			success: false,
-			message: `Some Error in Sending the Reset Message`,
-		});
-	}
+    console.error("RESET PASSWORD ERROR:", error);
+
+    return res.status(500).json({
+        success: false,
+        message: "Some Error in Sending the Reset Message",
+        error: error.message,
+    });
+}
 };
 
 exports.resetPassword = async (req, res) => {
