@@ -2,32 +2,37 @@ const nodemailer = require("nodemailer");
 
 const mailSender = async (email, title, body) => {
   try {
+    console.log("Creating transporter...");
+
     const transporter = nodemailer.createTransport({
-  host: process.env.MAIL_HOST,
-  port: 465,
-  secure: true,
-  auth: {
-    user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASS,
-  },
-  family: 4, // Force IPv4
-});
-await transporter.verify();
-console.log("SMTP Connected Successfully");
+      host: process.env.MAIL_HOST,
+      port: 465,
+      secure: true,
+      family: 4,
+      connectionTimeout: 10000,
+      greetingTimeout: 10000,
+      socketTimeout: 10000,
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS,
+      },
+    });
+
+    console.log("Transporter created");
 
     const info = await transporter.sendMail({
-      from: `StudyNotion <${process.env.MAIL_USER}>`,
+      from: process.env.MAIL_USER,
       to: email,
       subject: title,
       html: body,
     });
 
-    console.log("Mail sent successfully", info);
+    console.log("Mail Sent", info);
 
-    return info;   // ✅ Ye line add karo
-  } catch (error) {
-    console.log("Error in mailSender", error);
-    throw error;   // ✅ Error bhi propagate karo
+    return info;
+  } catch (err) {
+    console.error("Mail Error:", err);
+    throw err;
   }
 };
 
