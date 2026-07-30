@@ -33,9 +33,11 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: function (origin, callback) {
-      console.log("Incoming Origin:", origin);
-
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (
+        !origin ||
+        origin.startsWith("http://localhost") ||
+        origin.endsWith(".vercel.app")
+      ) {
         callback(null, true);
       } else {
         console.log("Blocked Origin:", origin);
