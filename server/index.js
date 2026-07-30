@@ -26,6 +26,7 @@ app.use(cookieParser());
  const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
+  "https://study-notion-five-cyan.vercel.app",
 ];
 
 app.use(
